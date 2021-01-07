@@ -4,7 +4,7 @@ noinst_LTLIBRARIES = libgstparse.la
 CLEANFILES = grammar.tab.h parse_lex.h grammar.output
 EXTRA_DIST = \
 	get_flex_version.py \
-	grammar.y \
+	grammar.y.in \
 	parse.l
 
 # uncomment these lines to dist the generated sources
@@ -20,8 +20,8 @@ libgstparse_la_LIBADD = $(GST_ALL_LIBS)
 
 noinst_HEADERS = types.h
 
-grammar.tab.c grammar.tab.h: grammar.y
-	$(AM_V_GEN)$(BISON_PATH) -d -v -ppriv_gst_parse_yy $(srcdir)/grammar.y -o grammar.tab.c && \
+grammar.tab.c grammar.tab.h: grammar.y.in
+	$(AM_V_GEN)$(BISON_PATH) -d -v -ppriv_gst_parse_yy $(srcdir)/grammar.y.in -o grammar.tab.c && \
 	mv grammar.tab.c grammar.tab_tmp.c && \
 	echo '#ifdef HAVE_CONFIG_H' > grammar.tab_tmp2.c && \
 	echo '#include <config.h>' >> grammar.tab_tmp2.c && \
